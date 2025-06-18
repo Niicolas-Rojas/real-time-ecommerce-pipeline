@@ -1,0 +1,31 @@
+# config/config.yaml
+project:
+  name: "real-time-ecommerce-pipeline"
+  gcp_project_id: "real-time-ecommerce-pipeline"  
+  region: "us-central1"
+  zone: "us-central1-a"
+
+bigquery:
+  dataset_id: "ecommerce_data"
+  tables:
+    transactions: "transactions"
+    products: "products"
+    customers: "customers"
+    events: "user_events"
+
+storage:
+  bucket_name: "ecommerce-data-lake"
+  raw_data_path: "raw/"
+  processed_data_path: "processed/"
+
+kafka:
+  bootstrap_servers: "localhost:9092"
+  topics:
+    transactions: "ecommerce-transactions"
+    events: "user-events"
+
+data_generator:
+  customers_count: 1000
+  products_count: 500
+  daily_transactions: 10000
+  events_per_minute: 100

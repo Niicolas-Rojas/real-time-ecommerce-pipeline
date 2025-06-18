@@ -1,0 +1,47 @@
+# ---------------------
+# 🐍 Python
+__pycache__/
+*.py[cod]
+.Python
+build/
+dist/
+
+# 🧪 Entorno virtual
+venv/
+venv310/
+env/
+ENV/
+
+# 💻 IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# 💻 SO
+.DS_Store
+Thumbs.db
+
+# 🔐 Credenciales
+*.json
+*.key
+.env
+credentials/
+
+# 📂 Datos
+data/raw/*
+data/processed/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+
+# 🪵 Logs
+logs/
+*.log
+
+# 🌍 Terraform
+*.tfstate
+.terraform/
+
+# 🌀 Airflow
+airflow.db
+airflow-webserver.pid

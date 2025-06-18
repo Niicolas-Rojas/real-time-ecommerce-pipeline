@@ -1,0 +1,55 @@
+version: '3'
+services:
+  airflow:
+    image: apache/airflow:2.7.3-python3.10
+    container_name: airflow
+    restart: always
+    depends_on:
+      - postgres
+    environment:
+      - AIRFLOW__CORE__EXECUTOR=LocalExecutor
+      - AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION=False
+      - AIRFLOW__CORE__LOAD_EXAMPLES=False
+      - AIRFLOW__CORE__FERNET_KEY=mruYisJ-bGfItqj3lKf92fBfYhGuLQCMxvreStVLHmU=
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres:5432/airflow
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./logs:/opt/airflow/logs
+      - ./data:/opt/airflow/data
+    ports:
+      - 8080:8080
+    command: >
+      bash -c "airflow db upgrade &&
+               airflow users create --username admin --password admin --firstname Nico --lastname Rojas --role Admin --email admin@example.com &&
+               airflow webserver"
+
+  scheduler:
+    image: apache/airflow:2.7.3-python3.10
+    container_name: airflow_scheduler
+    restart: always
+    depends_on:
+      - postgres
+    environment:
+      - AIRFLOW__CORE__EXECUTOR=LocalExecutor
+      - AIRFLOW__CORE__FERNET_KEY=mruYisJ-bGfItqj3lKf92fBfYhGuLQCMxvreStVLHmU=
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres:5432/airflow
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./logs:/opt/airflow/logs
+      - ./data:/opt/airflow/data
+    command: >
+      bash -c "airflow scheduler"
+
+  postgres:
+    image: postgres:13
+    container_name: airflow_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: airflow
+      POSTGRES_PASSWORD: airflow
+      POSTGRES_DB: airflow
+    volumes:
+      - postgres-db-volume:/var/lib/postgresql/data
+
+volumes:
+  postgres-db-volume:
