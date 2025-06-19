@@ -85,15 +85,15 @@ def setup_infrastructure():
         config = yaml.safe_load(f)
 
     # Inicializar cliente GCP
-    # gcp_client = GCPClient()   👈 COMENTAR
+    gcp_client = GCPClient()  
 
     # Crear dataset de BigQuery
     dataset_id = config['bigquery']['dataset_id']
-    # if gcp_client.create_dataset(dataset_id):   👈 COMENTAR
-    #     logger.info(f"✅ Dataset {dataset_id} configurado")
-    # else:
-    #     logger.error(f"❌ Error configurando dataset {dataset_id}")
-    #     return False
+    if gcp_client.create_dataset(dataset_id):           
+        logger.info(f"✅ Dataset {dataset_id} configurado")
+    else:
+        logger.error(f"❌ Error configurando dataset {dataset_id}")
+        return False
 
     # Crear tablas con schemas
     schemas = create_bigquery_schemas()
@@ -101,20 +101,20 @@ def setup_infrastructure():
 
     for table_key, table_name in table_names.items():
         if table_key in schemas:
-            # if gcp_client.create_table_from_schema(...):   👈 COMENTAR
-            #     logger.info(f"✅ Tabla {table_name} configurada")
-            # else:
-            #     logger.error(f"❌ Error configurando tabla {table_name}")
-            #     return False
+            if gcp_client.create_table_from_schema(dataset_id, table_name, schemas[table_key]):   
+                logger.info(f"✅ Tabla {table_name} configurada")
+            else:
+                logger.error(f"❌ Error configurando tabla {table_name}")
+                return False
             logger.info(f"🟡 Simulando creación de tabla {table_name}")
 
     # Crear bucket de Cloud Storage
     bucket_name = config['storage']['bucket_name']
-    # if gcp_client.create_bucket(bucket_name):   👈 COMENTAR
-    #     logger.info(f"✅ Bucket {bucket_name} configurado")
-    # else:
-    #     logger.error(f"❌ Error configurando bucket {bucket_name}")
-    #     return False
+    if gcp_client.create_bucket(bucket_name):   
+        logger.info(f"✅ Bucket {bucket_name} configurado")
+    else:
+        logger.error(f"❌ Error configurando bucket {bucket_name}")
+        return False
 
     return True
 

@@ -2,8 +2,8 @@
 project:
   name: "real-time-ecommerce-pipeline"
   gcp_project_id: "real-time-ecommerce-pipeline"  
-  region: "us-central1"
-  zone: "us-central1-a"
+  region: "southamerica-east1"
+  zone: "southamerica-east1-b"
 
 bigquery:
   dataset_id: "ecommerce_data"
@@ -14,7 +14,7 @@ bigquery:
     events: "user_events"
 
 storage:
-  bucket_name: "ecommerce-data-lake"
+  bucket_name: "ecommerce-data-lake-real-time"
   raw_data_path: "raw/"
   processed_data_path: "processed/"
 
