@@ -139,9 +139,11 @@ class EcommerceDataGenerator:
         return events
     
     def save_to_json(self, data: List, filename: str):
-        """Guarda datos en formato JSON"""
         with open(filename, 'w') as f:
-            json.dump([item.to_dict() for item in data], f, indent=2, default=str)
+            for item in data:
+                json_line = json.dumps(item.to_dict(), default=str)
+                f.write(json_line + '\n')
+
     
     def save_to_csv(self, data: List, filename: str):
         """Guarda datos en formato CSV"""

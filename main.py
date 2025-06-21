@@ -133,10 +133,11 @@ def generate_sample_data():
     generator = EcommerceDataGenerator(config_path='config/config.yaml')
     
     # Generar cada tipo de datos
-    customers = generator.generate_customers(100)
-    products = generator.generate_products(50)
-    transactions = generator.generate_transactions(customers, products, 200)
-    events = generator.generate_user_events(customers, products, 300)
+    customers = generator.generate_customers(1000)
+    products = generator.generate_products(200)
+    transactions = generator.generate_transactions(customers, products, 10000)
+    events = generator.generate_user_events(customers, products, 15000)
+
 
     # Guardar datos en JSON y CSV
     generator.save_data(customers, 'data/raw/customers.json', 'json')
