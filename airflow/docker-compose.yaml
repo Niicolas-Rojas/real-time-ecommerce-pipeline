@@ -12,10 +12,12 @@ services:
       - AIRFLOW__CORE__LOAD_EXAMPLES=False
       - AIRFLOW__CORE__FERNET_KEY=mruYisJ-bGfItqj3lKf92fBfYhGuLQCMxvreStVLHmU=
       - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres:5432/airflow
+      - GOOGLE_APPLICATION_CREDENTIALS=/opt/airflow/gcp-creds.json
     volumes:
       - ./dags:/opt/airflow/dags
       - ./logs:/opt/airflow/logs
       - ../data:/opt/airflow/data
+      - ./gcp-creds/airflow-gcs-key.json:/opt/airflow/gcp-creds.json
     ports:
       - 8080:8080
     command: >
@@ -33,10 +35,12 @@ services:
       - AIRFLOW__CORE__EXECUTOR=LocalExecutor
       - AIRFLOW__CORE__FERNET_KEY=mruYisJ-bGfItqj3lKf92fBfYhGuLQCMxvreStVLHmU=
       - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres:5432/airflow
+      - GOOGLE_APPLICATION_CREDENTIALS=/opt/airflow/gcp-creds.json
     volumes:
       - ./dags:/opt/airflow/dags
       - ./logs:/opt/airflow/logs
       - ../data:/opt/airflow/data
+      - ./gcp-creds/airflow-gcs-key.json:/opt/airflow/gcp-creds.json
     command: >
       bash -c "airflow scheduler"
 
